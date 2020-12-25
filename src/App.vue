@@ -2,13 +2,20 @@
   <div id="app">
     <h1>My Todolist</h1>
     <HelloWorld msg="Welcome to Your Vue.js App" />
-    <Todo text="My Todo" v-bind:date="date" />
+    <div v-for="todo in todos" :key="todo.id">
+      <Todo
+        v-bind:text="todo.text"
+        v-bind:date="todo.date"
+        v-bind:status="todo.status"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
-import Todo from "@/components/Todo/Todo";
+import Todo from "./components/Todo/Todo.vue";
+import { createTodo } from "@/utils/create-todo/create-todo";
 
 export default {
   name: "App",
@@ -18,7 +25,12 @@ export default {
   },
   data: function() {
     return {
-      date: new Date()
+      date: new Date(),
+      todos: [
+        createTodo("My first todo"),
+        createTodo("My old todo", false, new Date(2020, 11, 24)),
+        createTodo("My completed todo", true)
+      ]
     };
   }
 };
