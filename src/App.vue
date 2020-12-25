@@ -4,7 +4,6 @@
       My Todolist
       <span v-bind:class="progressClasses">{{ completed }} / {{ total }}</span>
     </h1>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
     <div v-for="todo in todos" :key="todo.id">
       <Todo
         v-on:toggle-status="() => toggleTodo(todo.id)"
@@ -17,16 +16,20 @@
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
 import Todo from "./components/Todo/Todo.vue";
 import { createTodo } from "@/utils/create-todo/create-todo";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
     Todo
   },
+  /**
+   * @return {{
+   *   date: Date,
+   *   todos: TodoInstance[]
+   * }}
+   */
   data: function() {
     return {
       date: new Date(),
@@ -38,30 +41,45 @@ export default {
     };
   },
   computed: {
+    /**
+     * Get todos count
+     * @return {number}
+     */
     total() {
       return this.todos?.length ?? -1;
     },
+    /**
+     * Get completed todos count
+     * @return {number}
+     */
     completed() {
       return this.todos?.filter(({ status }) => !!status).length ?? 0;
     },
-    progressClasses() {
+    /**
+     * Generate css classes for current progress
+     * @return {{completed: boolean, 'to-start': boolean, 'in-progress': boolean}}
+     */
+    progressClasses: function() {
+      const result = {
+        completed: false,
+        "in-progress": false,
+        "to-start": false
+      };
       if (this.completed === this.total) {
-        return {
-          completed: true
-        };
+        result.completed = true;
+        return result;
       }
       if (this.completed === 0) {
-        return {
-          "to-start": true
-        };
+        result["to-start"] = true;
+        return result;
       }
-      return {
-        "in-progress": true
-      };
+      result["in-progress"] = true;
+      return result;
     }
   },
   methods: {
     /**
+     * Update todo status
      * @param id {number}
      */
     toggleTodo(id) {
@@ -76,6 +94,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "./assets/variables";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -83,15 +102,15 @@ export default {
   color: #2c3e50;
 
   .completed {
-    color: #42b983;
+    color: $success;
   }
 
   .to-start {
-    color: #be2c14;
+    color: $error;
   }
 
   .in-progress {
-    color: #c98713;
+    color: $warn;
   }
 }
 </style>

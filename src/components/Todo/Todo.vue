@@ -20,17 +20,28 @@ export default {
     text: String
   },
   computed: {
+    /**
+     * Return date with locale format
+     * @return {string}
+     */
     displayedDate: function() {
       if (!(this.date instanceof Date)) {
         return "Invalid Date";
       }
       return this.date?.toLocaleDateString();
     },
+    /**
+     * Return this.text or placeholder if not provided
+     * @return {string}
+     */
     displayedText: function() {
       return this.text ?? "Empty todo";
     }
   },
   methods: {
+    /**
+     * Emit the "toggle-status" event
+     */
     toggleStatus() {
       this.$emit("toggle-status");
     }

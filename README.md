@@ -1,35 +1,17 @@
 # vue-todolist
 
-## Project setup
+Simple project to learn VueJS
 
-```
-npm install
-```
+## Stack
 
-### Compiles and hot-reloads for development
+- VueJS
+- ESLint
+- Prettier
+- Jest
 
-```
-npm run serve
-```
+## TODO
 
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Run your unit tests
-
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [ ] Handle todo creation/deletion (Learn how to use forms)
+  - [ ] Use an external datepicker (Learn how to use external vue components)
+- [ ] Multiple todo list (Learn how to use router)
+- [ ] Use a state manager (Learn how to use VueX)
