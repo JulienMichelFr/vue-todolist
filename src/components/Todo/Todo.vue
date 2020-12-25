@@ -1,6 +1,8 @@
 <template>
   <div class="todo">
-    <div class="todo__status">{{ status }}</div>
+    <button class="todo__status" v-on:click="toggleStatus()">
+      {{ status }}
+    </button>
     <div class="todo__text">{{ displayedText }}</div>
     <div class="todo__date">{{ displayedDate }}</div>
   </div>
@@ -26,6 +28,11 @@ export default {
     },
     displayedText: function() {
       return this.text ?? "Empty todo";
+    }
+  },
+  methods: {
+    toggleStatus() {
+      this.$emit("toggle-status");
     }
   }
 };

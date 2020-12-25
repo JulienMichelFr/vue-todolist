@@ -4,6 +4,7 @@
     <HelloWorld msg="Welcome to Your Vue.js App" />
     <div v-for="todo in todos" :key="todo.id">
       <Todo
+        v-on:toggle-status="() => toggleTodo(todo.id)"
         v-bind:text="todo.text"
         v-bind:date="todo.date"
         v-bind:status="todo.status"
@@ -32,6 +33,18 @@ export default {
         createTodo("My completed todo", true)
       ]
     };
+  },
+  methods: {
+    /**
+     * @param id {number}
+     */
+    toggleTodo(id) {
+      const todo = this.todos.find(t => t.id === id);
+      if (!todo) {
+        return;
+      }
+      todo.status = !todo.status;
+    }
   }
 };
 </script>
