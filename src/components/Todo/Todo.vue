@@ -1,7 +1,7 @@
 <template>
   <div class="todo">
     <div class="todo__status">{{ status }}</div>
-    <div class="todo__text">{{ text }}</div>
+    <div class="todo__text">{{ displayedText }}</div>
     <div class="todo__date">{{ displayedDate }}</div>
   </div>
 </template>
@@ -11,19 +11,21 @@ export default {
   name: "Todo.vue",
   props: {
     date: Date,
-    status: Boolean,
+    status: {
+      type: Boolean,
+      default: false
+    },
     text: String
   },
   computed: {
     displayedDate: function() {
-      if (!this.date) {
-        console.warn("No date provided");
-      }
       if (!(this.date instanceof Date)) {
-        console.warn("Date should be an instance of Date");
-        return;
+        return "Invalid Date";
       }
       return this.date?.toLocaleDateString();
+    },
+    displayedText: function() {
+      return this.text ?? "Empty todo";
     }
   }
 };
