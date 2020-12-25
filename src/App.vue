@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <h1>My Todolist</h1>
+    <h1>
+      My Todolist
+      <span v-bind:class="progressClasses">{{ completed }} / {{ total }}</span>
+    </h1>
     <HelloWorld msg="Welcome to Your Vue.js App" />
     <div v-for="todo in todos" :key="todo.id">
       <Todo
@@ -34,6 +37,29 @@ export default {
       ]
     };
   },
+  computed: {
+    total() {
+      return this.todos?.length ?? -1;
+    },
+    completed() {
+      return this.todos?.filter(({ status }) => !!status).length ?? 0;
+    },
+    progressClasses() {
+      if (this.completed === this.total) {
+        return {
+          completed: true
+        };
+      }
+      if (this.completed === 0) {
+        return {
+          "to-start": true
+        };
+      }
+      return {
+        "in-progress": true
+      };
+    }
+  },
   methods: {
     /**
      * @param id {number}
@@ -55,5 +81,17 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+
+  .completed {
+    color: #42b983;
+  }
+
+  .to-start {
+    color: #be2c14;
+  }
+
+  .in-progress {
+    color: #c98713;
+  }
 }
 </style>
