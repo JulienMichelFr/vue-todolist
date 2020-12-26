@@ -29,13 +29,17 @@
 </template>
 
 <script>
+function initDate() {
+  return new Date().toISOString().substring(0, 10);
+}
+
 export default {
   name: "CreateTodo",
   data: function() {
     return {
       text: "",
       status: false,
-      date: new Date().toISOString().substring(0, 10)
+      date: initDate()
     };
   },
   methods: {
@@ -50,6 +54,9 @@ export default {
         status: this.status,
         date: this.date
       });
+      this.text = "";
+      this.status = false;
+      this.date = initDate();
     }
   }
 };

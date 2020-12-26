@@ -4,7 +4,7 @@
       My Todolist
       <span v-bind:class="progressClasses">{{ completed }} / {{ total }}</span>
     </h1>
-    <CreateTodo />
+    <CreateTodo @create-todo="createTodo" />
     <hr />
     <div class="list-group" v-for="todo in todos" :key="todo.id">
       <Todo
@@ -93,6 +93,9 @@ export default {
         return;
       }
       todo.status = !todo.status;
+    },
+    createTodo({ text, status, date }) {
+      this.todos.push(createTodo(text, status, new Date(date)));
     }
   }
 };

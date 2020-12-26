@@ -4,9 +4,9 @@
       <input
         id="status"
         type="checkbox"
-        v-model="status"
+        v-bind:checked="status"
         class="form-check-input"
-        @change="toggleStatus"
+        @click="toggleStatus"
       />
       <label class="form-check-label visually-hidden" for="status">
         Completed
@@ -45,6 +45,12 @@ export default {
      */
     displayedText: function() {
       return this.text ?? "Empty todo";
+    },
+    /**
+     * @return {boolean}
+     */
+    displayedStatus: function() {
+      return this.status;
     }
   },
   methods: {
