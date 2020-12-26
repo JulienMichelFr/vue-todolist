@@ -14,6 +14,7 @@
     </div>
     <div class="todo__text">{{ displayedText }}</div>
     <div class="todo__date">{{ displayedDate }}</div>
+    <slot></slot>
   </div>
 </template>
 

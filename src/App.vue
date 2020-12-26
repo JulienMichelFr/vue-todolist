@@ -13,7 +13,11 @@
         v-bind:text="todo.text"
         v-bind:date="todo.date"
         v-bind:status="todo.status"
-      />
+      >
+        <button class="btn btn-danger" @click="deleteTodo(todo.id)">
+          Delete
+        </button>
+      </Todo>
     </div>
   </div>
 </template>
@@ -94,8 +98,23 @@ export default {
       }
       todo.status = !todo.status;
     },
+    /**
+     * Create a new todo
+     * @param text {string}
+     * @param status {boolean}
+     * @param date {string} Date with format 'YYYY-MM-DD'
+     */
     createTodo({ text, status, date }) {
       this.todos.push(createTodo(text, status, new Date(date)));
+    },
+    /**
+     * Delete todo
+     * @param id {number}
+     */
+    deleteTodo(id) {
+      if (confirm("Delete todo ?")) {
+        this.todos = this.todos.filter(t => t.id !== id);
+      }
     }
   }
 };
