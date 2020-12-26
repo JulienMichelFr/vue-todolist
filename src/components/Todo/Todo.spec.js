@@ -1,6 +1,13 @@
 import { shallowMount } from "@vue/test-utils";
 import Todo from "@/components/Todo/Todo";
 
+/**
+ *
+ * @param text {string}
+ * @param date {Date}
+ * @param status {boolean}
+ * @return {{date, wrapper: Wrapper<Vue>, text, status}}
+ */
 function mount({ text, date, status } = {}) {
   const wrapper = shallowMount(Todo, {
     propsData: {
@@ -52,7 +59,7 @@ describe("Todo.vue", () => {
       const { wrapper } = mount();
       await wrapper.find(".todo__status").trigger("click");
       await wrapper.vm.$nextTick();
-      expect(wrapper.emitted()["toggle-status"]).toBeDefined();
+      expect(wrapper.emitted()["toggle-status"]).toEqual([[]]);
     });
   });
 });

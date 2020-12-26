@@ -1,6 +1,6 @@
 <template>
   <div class="todo">
-    <button class="todo__status" v-on:click="toggleStatus()">
+    <button class="todo__status" @click="toggleStatus()">
       {{ status }}
     </button>
     <div class="todo__text">{{ displayedText }}</div>

@@ -4,6 +4,8 @@
       My Todolist
       <span v-bind:class="progressClasses">{{ completed }} / {{ total }}</span>
     </h1>
+    <CreateTodo />
+    <hr />
     <div v-for="todo in todos" :key="todo.id">
       <Todo
         v-on:toggle-status="() => toggleTodo(todo.id)"
@@ -18,10 +20,12 @@
 <script>
 import Todo from "./components/Todo/Todo.vue";
 import { createTodo } from "@/utils/create-todo/create-todo";
+import CreateTodo from "@/components/CreateTodo/CreateTodo";
 
 export default {
   name: "App",
   components: {
+    CreateTodo,
     Todo
   },
   /**
