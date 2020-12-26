@@ -1,8 +1,17 @@
 <template>
   <div class="todo">
-    <button class="todo__status" @click="toggleStatus()">
-      {{ status }}
-    </button>
+    <div class="form-check">
+      <input
+        id="status"
+        type="checkbox"
+        v-model="status"
+        class="form-check-input"
+        @change="toggleStatus"
+      />
+      <label class="form-check-label visually-hidden" for="status">
+        Completed
+      </label>
+    </div>
     <div class="todo__text">{{ displayedText }}</div>
     <div class="todo__date">{{ displayedDate }}</div>
   </div>
@@ -51,10 +60,9 @@ export default {
 
 <style lang="scss" scoped>
 .todo {
-  border-radius: 5px;
-  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.12);
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
   gap: 10px;
 
   &__text {

@@ -6,8 +6,9 @@
     </h1>
     <CreateTodo />
     <hr />
-    <div v-for="todo in todos" :key="todo.id">
+    <div class="list-group" v-for="todo in todos" :key="todo.id">
       <Todo
+        class="list-group-item"
         v-on:toggle-status="() => toggleTodo(todo.id)"
         v-bind:text="todo.text"
         v-bind:date="todo.date"

@@ -27,13 +27,12 @@ function mount({ text, date, status } = {}) {
 describe("Todo.vue", () => {
   describe("Mount", () => {
     it("renders todo", () => {
-      const { text, date, status, wrapper } = mount({
+      const { text, date, wrapper } = mount({
         text: "My Todo",
         date: new Date(),
         status: false
       });
       expect(wrapper.find(".todo__text").text()).toMatch(text);
-      expect(wrapper.find(".todo__status").text()).toMatch(status.toString());
       expect(wrapper.find(".todo__date").text()).toMatch(
         date.toLocaleDateString()
       );
@@ -42,7 +41,6 @@ describe("Todo.vue", () => {
     it("should render empty todo", () => {
       const { wrapper } = mount();
       expect(wrapper.find(".todo__text").text()).toMatch("Empty todo");
-      expect(wrapper.find(".todo__status").text()).toMatch("false");
       expect(wrapper.find(".todo__date").text()).toMatch("Invalid Date");
     });
 
@@ -57,7 +55,7 @@ describe("Todo.vue", () => {
   describe("Events", () => {
     it("emit toggle-status event", async () => {
       const { wrapper } = mount();
-      await wrapper.find(".todo__status").trigger("click");
+      await wrapper.find(".form-check-input").trigger("click");
       await wrapper.vm.$nextTick();
       expect(wrapper.emitted()["toggle-status"]).toEqual([[]]);
     });
