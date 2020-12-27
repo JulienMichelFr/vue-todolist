@@ -10,6 +10,7 @@
       <Todo
         class="list-group-item"
         v-on:toggle-status="() => toggleTodo(todo.id)"
+        v-on:update-text="updatedText => updateTodoText(todo.id, updatedText)"
         v-bind:text="todo.text"
         v-bind:date="todo.date"
         v-bind:status="todo.status"
@@ -97,6 +98,21 @@ export default {
         return;
       }
       todo.status = !todo.status;
+    },
+    /**
+     * Update todo text
+     * @param id {number}
+     * @param updatedText {string}
+     */
+    updateTodoText(id, updatedText) {
+      const todo = this.todos.find(t => t.id === id);
+      if (!todo) {
+        return;
+      }
+      if (!updatedText?.trim()?.length) {
+        return;
+      }
+      todo.text = updatedText;
     },
     /**
      * Create a new todo
