@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import { createTodo } from "@/utils/create-todo/create-todo";
 import Todo from "@/components/Todo/Todo.vue";
 import CreateTodo from "@/components/CreateTodo/CreateTodo";
+import { TodoModel } from "@/utils/models/todo/todo.model";
 
 export default {
   name: "App",
@@ -37,16 +37,16 @@ export default {
   /**
    * @return {{
    *   date: Date,
-   *   todos: TodoInstance[]
+   *   todos: TodoModel[]
    * }}
    */
   data: function() {
     return {
       date: new Date(),
       todos: [
-        createTodo("My first todo"),
-        createTodo("My old todo", false, new Date(2020, 11, 24)),
-        createTodo("My completed todo", true)
+        new TodoModel("My first todo"),
+        new TodoModel("My old todo", false, new Date(2020, 11, 24)),
+        new TodoModel("My completed todo", true)
       ]
     };
   },
@@ -119,7 +119,7 @@ export default {
      * @param date {string} Date with format 'YYYY-MM-DD'
      */
     createTodo({ text, status, date }) {
-      this.todos.push(createTodo(text, status, new Date(date)));
+      this.todos.push(new TodoModel(text, status, new Date(date)));
     },
     /**
      * Delete todo
