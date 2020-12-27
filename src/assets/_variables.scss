@@ -1,3 +1,15 @@
 $success: #42b983;
 $warn: #c98713;
 $error: #be2c14;
+
+.completed {
+  color: $success;
+}
+
+.to-start {
+  color: $error;
+}
+
+.in-progress {
+  color: $warn;
+}

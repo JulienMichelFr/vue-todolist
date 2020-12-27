@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "faker": "5.1.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0"
   },
   "devDependencies": {
+    "@types/faker": "5.1.5",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "4.5.9",

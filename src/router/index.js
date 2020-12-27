@@ -1,8 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import { initTodolistService } from "@/utils/init";
 
 Vue.use(VueRouter);
+
+initTodolistService();
 
 const routes = [
   {
