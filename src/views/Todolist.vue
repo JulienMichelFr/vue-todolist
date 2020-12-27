@@ -2,11 +2,13 @@
   <div id="app">
     <h1>
       My Todolist
-      <span v-bind:class="progressClasses">{{ completed }} / {{ total }}</span>
+      <span v-bind:class="progressClasses"
+        >{{ todolist.completedCount }} / {{ todolist.count }}</span
+      >
     </h1>
     <CreateTodo @create-todo="createTodo" />
     <hr />
-    <div class="list-group" v-for="todo in todos" :key="todo.id">
+    <div class="list-group" v-for="todo in todolist.todos" :key="todo.id">
       <Todo
         class="list-group-item"
         v-on:toggle-status="() => toggleTodo(todo.id)"
@@ -27,6 +29,7 @@
 import Todo from "@/components/Todo/Todo.vue";
 import CreateTodo from "@/components/CreateTodo/CreateTodo";
 import { TodoModel } from "@/utils/models/todo/todo.model";
+import { TodolistModel } from "@/utils/models/todolist/todolist.model";
 
 export default {
   name: "App",
@@ -34,37 +37,10 @@ export default {
     CreateTodo,
     Todo
   },
-  /**
-   * @return {{
-   *   date: Date,
-   *   todos: TodoModel[]
-   * }}
-   */
-  data: function() {
-    return {
-      date: new Date(),
-      todos: [
-        new TodoModel("My first todo"),
-        new TodoModel("My old todo", false, new Date(2020, 11, 24)),
-        new TodoModel("My completed todo", true)
-      ]
-    };
+  props: {
+    todolist: TodolistModel
   },
   computed: {
-    /**
-     * Get todos count
-     * @return {number}
-     */
-    total() {
-      return this.todos?.length ?? -1;
-    },
-    /**
-     * Get completed todos count
-     * @return {number}
-     */
-    completed() {
-      return this.todos?.filter(({ status }) => !!status).length ?? 0;
-    },
     /**
      * Generate css classes for current progress
      * @return {{completed: boolean, 'to-start': boolean, 'in-progress': boolean}}
@@ -75,11 +51,11 @@ export default {
         "in-progress": false,
         "to-start": false
       };
-      if (this.completed === this.total) {
+      if (this.todolist.isCompleted) {
         result.completed = true;
         return result;
       }
-      if (this.completed === 0) {
+      if (this.todolist.isNotStarted) {
         result["to-start"] = true;
         return result;
       }
@@ -93,7 +69,7 @@ export default {
      * @param id {number}
      */
     toggleTodo(id) {
-      const todo = this.todos.find(t => t.id === id);
+      const todo = this.todolist.todos.find(t => t.id === id);
       if (!todo) {
         return;
       }
@@ -103,7 +79,7 @@ export default {
      * Update todo text
      */
     updateTodoText(id, updatedText) {
-      const todo = this.todos.find(t => t.id === id);
+      const todo = this.todolist.todos.find(t => t.id === id);
       if (!todo) {
         return;
       }
@@ -119,7 +95,7 @@ export default {
      * @param date {string} Date with format 'YYYY-MM-DD'
      */
     createTodo({ text, status, date }) {
-      this.todos.push(new TodoModel(text, status, new Date(date)));
+      this.todolist.addTodo(new TodoModel(text, status, new Date(date)));
     },
     /**
      * Delete todo
@@ -127,7 +103,7 @@ export default {
      */
     deleteTodo(id) {
       if (confirm("Delete todo ?")) {
-        this.todos = this.todos.filter(t => t.id !== id);
+        this.todolist.removeTodo(id);
       }
     }
   }

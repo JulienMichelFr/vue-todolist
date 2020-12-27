@@ -1,5 +1,7 @@
+import * as faker from "faker";
+
 export class WithId {
-  #id = Math.round(Math.random() * 1000);
+  #id = faker.random.uuid();
 
   /**
    * @return {number}

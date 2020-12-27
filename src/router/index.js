@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import { initTodolistService } from "@/utils/init";
+import { TodolistService } from "@/utils/services/todolist/todolist.service";
 
 Vue.use(VueRouter);
 
@@ -14,8 +15,11 @@ const routes = [
     component: Home
   },
   {
-    path: "/todolist/:id",
-    name: "TodolistDetail",
+    path: "/todolists/:id",
+    name: "todolist.detail",
+    props: route => ({
+      todolist: TodolistService.findById(route.params.id)
+    }),
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.

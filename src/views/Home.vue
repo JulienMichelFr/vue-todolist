@@ -1,11 +1,13 @@
 <template>
-  <div class="list-group">
-    <TodolistCard
-      class="list-group-item"
+  <div>
+    <router-link
+      :to="{ name: 'todolist.detail', params: { id: todolist.id } }"
+      class="list-group"
       v-for="todolist in todolists"
       :key="todolist.id"
-      :todolist="todolist"
-    ></TodolistCard>
+    >
+      <TodolistCard class="list-group-item" :todolist="todolist"></TodolistCard>
+    </router-link>
   </div>
 </template>
 
