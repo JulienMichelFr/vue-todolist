@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>
-      My Todolist
+      {{ todolist.name }}
       <span v-bind:class="progressClasses"
         >{{ todolist.completedCount }} / {{ todolist.count }}</span
       >
@@ -66,27 +66,25 @@ export default {
   methods: {
     /**
      * Update todo status
-     * @param id {number}
+     * @param id {string}
      */
     toggleTodo(id) {
-      const todo = this.todolist.todos.find(t => t.id === id);
-      if (!todo) {
-        return;
-      }
-      todo.status = !todo.status;
+      this.$store.commit("toggleTodo", {
+        todolistId: this.todolist.id,
+        todoId: id
+      });
     },
     /**
      * Update todo text
+     * @param id {string}
+     * @param updatedText {string}
      */
     updateTodoText(id, updatedText) {
-      const todo = this.todolist.todos.find(t => t.id === id);
-      if (!todo) {
-        return;
-      }
-      if (!updatedText?.trim()?.length) {
-        return;
-      }
-      todo.text = updatedText;
+      this.$store.commit("updateTodoText", {
+        todolistId: this.todolist.id,
+        todoId: id,
+        updatedText
+      });
     },
     /**
      * Create a new todo
@@ -95,15 +93,21 @@ export default {
      * @param date {string} Date with format 'YYYY-MM-DD'
      */
     createTodo({ text, status, date }) {
-      this.todolist.addTodo(new TodoModel(text, status, new Date(date)));
+      this.$store.commit("addTodo", {
+        todolistId: this.todolist.id,
+        todo: new TodoModel(text, status, new Date(date)).toObject()
+      });
     },
     /**
      * Delete todo
-     * @param id {number}
+     * @param id {string}
      */
     deleteTodo(id) {
       if (confirm("Delete todo ?")) {
-        this.todolist.removeTodo(id);
+        this.$store.commit("deleteTodo", {
+          todolistId: this.todolist.id,
+          todoId: id
+        });
       }
     }
   }

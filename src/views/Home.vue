@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import { TodolistService } from "@/utils/services/todolist/todolist.service";
 import { TodolistModel } from "@/utils/models/todolist/todolist.model";
 import TodolistCard from "@/components/TodolistCard/TodolistCard";
 
@@ -21,14 +20,17 @@ export default {
   components: {
     TodolistCard
   },
-  data: function() {
-    return {
-      todolists: TodolistService.todolists
-    };
+  computed: {
+    todolists() {
+      return this.$store.state.todolists.map(t => TodolistModel.fromObject(t));
+    }
   },
   methods: {
     addTodo() {
-      TodolistService.addTodolist(new TodolistModel("My todolist", []));
+      this.$store.commit(
+        "addTodo",
+        new TodolistModel("My todolist", []).toObject()
+      );
     }
   }
 };

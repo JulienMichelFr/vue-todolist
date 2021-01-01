@@ -1,4 +1,12 @@
 import { WithId } from "@/utils/models/with-id";
+import { TodoModel } from "@/utils/models/todo/todo.model";
+
+/**
+ * @typedef TodolistModelInterface
+ * @property id {string}
+ * @property name {string}
+ * @property todos {TodoModelInterface[]}
+ */
 
 export class TodolistModel extends WithId {
   /**
@@ -58,30 +66,39 @@ export class TodolistModel extends WithId {
   }
 
   /**
-   *
    * @param name
    * @param todos {TodoModel[]}
+   * @param id {string | undefined}
    */
-  constructor(name, todos = []) {
-    super();
+  constructor(name, todos = [], id = undefined) {
+    super(id);
     this.name = name;
     this.todos = todos;
   }
 
   /**
-   * @param todo {TodoModel}
+   * @return TodolistModelInterface
    */
-  addTodo(todo) {
-    this.todos.push(todo);
+  toObject() {
+    return {
+      ...super.toObject(),
+      name: this.name,
+      todos: this.todos.map(t => t.toObject())
+    };
   }
 
   /**
-   * @param todoId {number}
+   *
+   * @param name {string}
+   * @param todos {{date: Date, text: string, status: boolean, id: string}[]}
+   * @param id {string}
+   * @return {TodolistModel}
    */
-  removeTodo(todoId) {
-    const index = this.todos.findIndex(todo => todo.id === todoId);
-    if (index > -1) {
-      this.todos.splice(index, 1);
-    }
+  static fromObject({ name, todos, id }) {
+    return new TodolistModel(
+      name,
+      todos.map(t => TodoModel.fromObject(t)),
+      id
+    );
   }
 }

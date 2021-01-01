@@ -1,12 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import { initTodolistService } from "@/utils/init";
-import { TodolistService } from "@/utils/services/todolist/todolist.service";
+import store from "../store";
+import { TodolistModel } from "@/utils/models/todolist/todolist.model";
 
 Vue.use(VueRouter);
-
-initTodolistService();
 
 const routes = [
   {
@@ -18,7 +16,9 @@ const routes = [
     path: "/todolists/:id",
     name: "todolist.detail",
     props: route => ({
-      todolist: TodolistService.findById(route.params.id)
+      todolist: TodolistModel.fromObject(
+        store.getters.findTodolistById(route.params.id)
+      )
     }),
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
